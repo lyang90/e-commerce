@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   try {
-    const tagData = await Location.findAll({
+    const tagData = await Tag.findAll({
       include: { model: Product, as: 'Products'}
     });
     res.status(200).json(tagData);
@@ -20,8 +20,11 @@ router.get('/:id', async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
   try {
-    const tagData = await Location.findByPk(req.params.id, {
-      include: { model: Product, as: 'Products'}
+    const tagData = await Tag.findByPk(req.params.id, {
+      include: { 
+        model: Product,
+        required: true
+      }
     });
     res.status(200).json(tagData);
   } catch (err) {
@@ -33,9 +36,9 @@ router.post('/', async (req, res) => {
   // create a new tag
   // create a new category
   try {
-    const tagData = await Location.create(req.body);
+    const tagData = await Tag.create(req.body);
     res.status(200).json(tagData);
-  } catch (error) {
+  } catch (err) {
     res.status(500).json(err);
   }
 });
@@ -43,7 +46,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
   try {
-    const tagData = await Location.update({
+    const tagData = await Tag.update({
       where: {
         id: req.params.id
       }
@@ -56,7 +59,7 @@ router.put('/:id', async (req, res) => {
 
     res.status(200).json(tagData);
 
-  } catch (error) {
+  } catch (err) {
     res.status(500).json(err);
   }
 });
@@ -64,7 +67,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
   try {
-    const tagData = await Location.destroy({
+    const tagData = await Tag.destroy({
       where: {
         id: req.params.id
       }
@@ -77,7 +80,7 @@ router.delete('/:id', async (req, res) => {
 
     res.status(200).json(tagData);
 
-  } catch (error) {
+  } catch (err) {
     res.status(500).json(err);
   }
 });

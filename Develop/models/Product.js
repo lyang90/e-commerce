@@ -37,11 +37,10 @@ Product.init(
     category_id: {
       type: DataTypes.INTEGER,
       notnull: true,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    tag_name: {
-      type: DataTypes.STRING
+      references: {
+        model: "category",
+        key: "id"
+      }
     }
 
   },
